@@ -1,4 +1,5 @@
 {
-  "cSpell.words": ["lingoodia"],
+  "cSpell.words": ["lingoodia", "pnpx", "tailwindcss"],
+  "eslint.experimental.useFlatConfig": true,
   "editor.rulers": [120]
 }

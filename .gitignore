@@ -1,12 +1,24 @@
+# Logs
+logs/
+*.log
+pnpm-debug.log*
+
 # macOS
 .DS_Store
 
-# VSCode
+# Editor directories and files
 .vscode/*
-!.vscode/settings.json
+!.vscode/extensions.json
+.idea
 
 # Node.js
 node_modules/
 
 # Build Artifacts
 dist/
+dist-ssr/
+*.local
+
+# Sass module declaration files
+*.module.sass.d.ts
+*.module.scss.d.ts

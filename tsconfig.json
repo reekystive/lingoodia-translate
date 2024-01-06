@@ -1,0 +1,16 @@
+// for javascript type checking
+{
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "types": ["node"],
+    "strict": true,
+    "allowJs": true,
+    "checkJs": true,
+    "outDir": "dist"
+  },
+  "include": ["eslint.config.js", ".prettierrc.mjs"]
+}
