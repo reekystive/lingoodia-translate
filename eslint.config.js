@@ -52,4 +52,13 @@ export default defineFlatConfig([
       '@typescript-eslint/no-confusing-void-expression': ['error', { ignoreArrowShorthand: true }],
     },
   },
+  {
+    files: ['apps/lingoodia-server/src/**/*.ts'],
+    languageOptions: {
+      globals: { ...globals.node, ...globals.es2020 },
+    },
+    rules: {
+      '@typescript-eslint/require-await': 'off',
+    },
+  },
 ]);
