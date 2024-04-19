@@ -1,5 +1,20 @@
 {
-  "cSpell.words": ["lingoodia", "pnpx", "tailwindcss"],
+  "cSpell.words": [
+    "fastify",
+    "kysely",
+    "lingoodia",
+    "outdir",
+    "pnpx",
+    "tailwindcss",
+    "trpc",
+    "nestjs",
+    "nextjs",
+    "supertest"
+  ],
+  "cSpell.ignorePaths": ["node_modules", "pnpm-lock.yaml"],
   "eslint.experimental.useFlatConfig": true,
-  "editor.rulers": [120]
+  "eslint.workingDirectories": ["${workspaceFolder}"],
+  "editor.rulers": [120],
+  "typescript.preferences.importModuleSpecifierEnding": "js",
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

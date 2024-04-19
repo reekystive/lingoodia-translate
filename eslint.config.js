@@ -20,7 +20,7 @@ export default defineFlatConfig([
     ignores: ['**/node_modules/**', '**/dist/**', '**/*.module.{scss,sass}.d.ts'],
   },
   {
-    files: ['{apps,libs}/*/src/**/*.ts{,x}', '{apps,libs}/*/vite.config.ts'],
+    files: ['{apps,libs}/*/**/*.{j,t}s{,x}'],
     plugins: {
       '@typescript-eslint': /** @type {any} */ (tsPlugin),
       'react-hooks': reactHooksPlugin,
@@ -51,9 +51,12 @@ export default defineFlatConfig([
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/no-confusing-void-expression': ['error', { ignoreArrowShorthand: true }],
     },
+    settings: {
+      react: { version: 'detect' },
+    },
   },
   {
-    files: ['apps/lingoodia-server/src/**/*.ts'],
+    files: ['apps/server/src/**/*.ts'],
     languageOptions: {
       globals: { ...globals.node, ...globals.es2020 },
     },

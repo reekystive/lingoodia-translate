@@ -6,7 +6,10 @@
   "author": "reekystive",
   "type": "module",
   "scripts": {
-    "lint": "pnpm --filter '*' run lint"
+    "lint": "pnpm --filter '*' run lint",
+    "build:server": "pnpm --filter @lingoodia/server build",
+    "build:web": "pnpm --filter @lingoodia/server build",
+    "dev": "pnpm run --parallel dev"
   },
   "devDependencies": {
     "@types/eslint": "^8.56.1",

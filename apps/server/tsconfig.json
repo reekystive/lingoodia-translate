@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "ES2022",
+    "moduleResolution": "Bundler",
     "strict": true,
-    "lib": ["ES2022"],
-    "types": ["node"],
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "types": ["@edge-runtime/types"],
     "outDir": "dist",
     "skipLibCheck": true
   },
