@@ -13,20 +13,20 @@
     "@koa/cors": "^5.0.0",
     "@koa/router": "^12.0.1",
     "@trpc/server": "^10.45.2",
-    "@vercel/postgres-kysely": "^0.7.2",
+    "@vercel/postgres-kysely": "^0.8.0",
     "fastify": "^4.26.2",
-    "koa": "^2.15.0",
+    "koa": "^2.15.3",
     "kysely": "^0.27.3",
-    "zod": "^3.22.4"
+    "zod": "^3.22.5"
   },
   "devDependencies": {
     "@edge-runtime/types": "^2.2.9",
-    "@types/koa": "^2.13.12",
+    "@types/koa": "^2.15.0",
     "@types/koa__cors": "^5.0.0",
     "@types/koa__router": "^12.0.4",
     "edge-runtime": "^2.5.9",
     "esbuild": "^0.20.2",
-    "tsx": "^4.7.1",
-    "typescript": "^5.3.3"
+    "tsx": "^4.7.2",
+    "typescript": "^5.4.5"
   }
 }
