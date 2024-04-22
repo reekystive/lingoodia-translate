@@ -1,13 +1,15 @@
-import { appRouter } from './router.ts';
-
+import ws from '@fastify/websocket';
 import { fastifyTRPCPlugin, FastifyTRPCPluginOptions } from '@trpc/server/adapters/fastify';
 import fastify from 'fastify';
 import { createContext } from './context.ts';
+import { appRouter } from './router.ts';
 
 const server = fastify({ maxParamLength: 5000 });
 
+void server.register(ws);
 void server.register(fastifyTRPCPlugin, {
   prefix: '/trpc',
+  useWSS: true,
   trpcOptions: {
     router: appRouter,
     createContext,

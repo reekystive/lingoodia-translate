@@ -1,3 +1,4 @@
+import { observable } from '@trpc/server/observable';
 import { z } from 'zod';
 import { publicProcedure, router } from './trpc.ts';
 import { wait } from './utils.ts';
@@ -19,5 +20,15 @@ export const appRouter = router({
     await wait(10);
     const user = input;
     return user;
+  }),
+  randomNumber: publicProcedure.subscription(() => {
+    return observable<{ randomNumber: number }>((emit) => {
+      const timer = setInterval(() => {
+        emit.next({ randomNumber: Math.random() });
+      }, 1000);
+      return () => {
+        clearInterval(timer);
+      };
+    });
   }),
 });
