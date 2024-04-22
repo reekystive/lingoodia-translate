@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite-node --watch src/index.ts",
     "start": "node dist/index.mjs",
-    "build": "tsc -p tsconfig.json && esbuild src/index.ts --bundle --outfile=dist/index.mjs --sourcemap --format=esm --platform=node --target=node16"
+    "build": "tsc -p tsconfig.json && esbuild src/index.ts --bundle --outfile=dist/index.mjs --sourcemap --format=esm --platform=node --target=node16",
+    "lint": "ESLINT_USE_FLAT_CONFIG=true eslint . --max-warnings 0"
   },
   "dependencies": {
     "@fastify/cors": "^9.0.1",
