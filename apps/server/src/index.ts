@@ -1,27 +1,40 @@
-import { createHTTPServer } from '@trpc/server/adapters/standalone';
 import { appRouter } from './router.ts';
 
-const server = createHTTPServer({
-  router: appRouter,
+import { fastifyTRPCPlugin, FastifyTRPCPluginOptions } from '@trpc/server/adapters/fastify';
+import fastify from 'fastify';
+import { createContext } from './context.ts';
+
+const server = fastify({ maxParamLength: 5000 });
+
+void server.register(fastifyTRPCPlugin, {
+  prefix: '/trpc',
+  trpcOptions: {
+    router: appRouter,
+    createContext,
+    onError({ path, error }) {
+      console.error(`Error in tRPC handler on path '${path}':`, error);
+    },
+  } satisfies FastifyTRPCPluginOptions<AppRouter>['trpcOptions'],
 });
 
-const port = Number(process.env.PORT ?? 4000);
-
-server.listen(port);
-server.server.once('listening', () => {
-  const address = server.server.address();
-  if (address === null) {
-    return;
+async function bootstrap() {
+  const port = Number(process.env.PORT ?? 4000);
+  try {
+    await server.listen({ port });
+  } catch (err) {
+    server.log.error(err);
+    process.exit(1);
   }
-  if (typeof address === 'object' && 'address' in address) {
+  const addresses = server.addresses();
+  for (const address of addresses) {
     const isIpv6 = address.family.toLowerCase() === 'ipv6';
     const ip = isIpv6 ? `[${address.address}]` : address.address;
     const url = `http://${ip}:${address.port}/`;
     console.log('listening on %o port %o (%o)', address.address, address.port, url);
-  } else {
-    console.log('listening on %o', address);
   }
-});
+}
+
+void bootstrap();
 
 function shutdown() {
   return new Promise<void>((resolve) => {
