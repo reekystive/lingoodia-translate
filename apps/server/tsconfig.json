@@ -4,10 +4,12 @@
     "module": "ES2022",
     "moduleResolution": "Bundler",
     "strict": true,
-    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "lib": ["ES2022"],
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
     "types": ["@edge-runtime/types"],
     "outDir": "dist",
     "skipLibCheck": true
   },
-  "include": ["src"]
+  "include": ["src", "*.config.ts"]
 }
