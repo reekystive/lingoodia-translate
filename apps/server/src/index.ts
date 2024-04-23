@@ -1,3 +1,4 @@
+import cors from '@fastify/cors';
 import ws from '@fastify/websocket';
 import { fastifyTRPCPlugin, FastifyTRPCPluginOptions } from '@trpc/server/adapters/fastify';
 import fastify from 'fastify';
@@ -6,8 +7,9 @@ import { appRouter } from './router.ts';
 
 const server = fastify({ maxParamLength: 5000 });
 
-void server.register(ws);
-void server.register(fastifyTRPCPlugin, {
+await server.register(cors, {});
+await server.register(ws);
+await server.register(fastifyTRPCPlugin, {
   prefix: '/trpc',
   useWSS: true,
   trpcOptions: {
