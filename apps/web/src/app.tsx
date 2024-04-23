@@ -1,12 +1,25 @@
 import classNames from 'classnames';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
+import { usePromise } from 'react-use';
 import styles from './app.module.scss';
 import reactLogo from './assets/react.svg';
 import { Button } from './components/button.tsx';
+import { trpc } from './trpc.ts';
 import viteLogo from '/vite.svg';
 
 export const App: FC = () => {
   const [count, setCount] = useState(0);
+  const mounted = usePromise();
+  const [list, setList] = useState<string[]>([]);
+
+  useEffect(() => {
+    void (async () => {
+      const list = await mounted(trpc.userList.query());
+      setList(list);
+    })().catch((e: unknown) => {
+      console.error(e);
+    });
+  }, [mounted]);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
@@ -26,6 +39,14 @@ export const App: FC = () => {
         </p>
       </div>
       <p className="text-[#888]">Click on the Vite and React logos to learn more</p>
+      <h2 className="mt-[2em]">From tRPC Server</h2>
+      <ul className="mt-4 grid grid-cols-6 gap-2">
+        {list.map((item) => (
+          <li className="border-[1px] border-slate-500 border-opacity-20 p-2" key={item}>
+            {item}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
