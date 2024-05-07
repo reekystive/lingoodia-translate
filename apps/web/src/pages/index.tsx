@@ -1,13 +1,13 @@
 import classNames from 'classnames';
 import { FC, useEffect, useState } from 'react';
 import { usePromise } from 'react-use';
-import styles from './app.module.scss';
-import reactLogo from './assets/react.svg';
-import { Button } from './components/button.tsx';
-import { trpc } from './trpc.ts';
+import reactLogo from '../assets/react.svg';
+import { Button } from '../components/button.tsx';
+import { trpc } from '../server/trpc.ts';
+import css from './index.module.scss';
 import viteLogo from '/vite.svg';
 
-export const App: FC = () => {
+const App: FC = () => {
   const [count, setCount] = useState(0);
   const mounted = usePromise();
   const [list, setList] = useState<string[]>([]);
@@ -25,10 +25,10 @@ export const App: FC = () => {
     <div className="flex min-h-screen flex-col items-center justify-center">
       <div className="flex flex-row">
         <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className={classNames(styles.logo, styles.vue)} alt="Vite logo" />
+          <img src={viteLogo} className={classNames(css.logo, css.vue)} alt="Vite logo" />
         </a>
         <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className={classNames(styles.logo, styles.react)} alt="React logo" />
+          <img src={reactLogo} className={classNames(css.logo, css.react)} alt="React logo" />
         </a>
       </div>
       <h1 className="my-[0.5em] text-[3.2em] font-bold leading-[1.1]">Vite + React</h1>
@@ -50,3 +50,5 @@ export const App: FC = () => {
     </div>
   );
 };
+
+export default App;
