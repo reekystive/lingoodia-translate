@@ -55,7 +55,7 @@ const ProjectCard: FC<{ children?: ReactNode }> = () => {
 
 const Page: FC = () => {
   return (
-    <main className="h-full w-full overflow-auto">
+    <main className="h-full w-full overflow-auto overscroll-contain">
       <HeaderPadding />
       <div className="mx-auto max-w-[1400px] px-2 py-2 lg:px-8 lg:py-6">
         <Typography variant="h5" className="mb-4 mt-16 px-4 text-left font-medium leading-none">
