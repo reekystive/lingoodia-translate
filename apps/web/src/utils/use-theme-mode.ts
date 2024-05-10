@@ -6,13 +6,17 @@ const DARK_QUERY = '(prefers-color-scheme: dark)';
 
 class ThemeModeStorage {
   private listeners = new Set<() => void>();
+  constructor() {
+    window.matchMedia(DARK_QUERY).addEventListener('change', () => {
+      this.listeners.forEach((listener) => listener());
+    });
+  }
   public getSnapshot = () => {
     const localStorageValue = window.localStorage.getItem('theme-mode') as ThemeMode | null;
     if (localStorageValue) {
       return localStorageValue;
     }
     const matchValue: ThemeMode = window.matchMedia(DARK_QUERY).matches ? 'dark' : 'light';
-    localStorage.setItem('theme-mode', matchValue);
     return matchValue;
   };
   public subscribe = (listener: () => void) => {
@@ -22,7 +26,12 @@ class ThemeModeStorage {
     };
   };
   public setThemeMode = (newThemeMode: ThemeMode) => {
-    localStorage.setItem('theme-mode', newThemeMode);
+    const matchValue: ThemeMode = window.matchMedia(DARK_QUERY).matches ? 'dark' : 'light';
+    if (newThemeMode === matchValue) {
+      localStorage.removeItem('theme-mode');
+    } else {
+      localStorage.setItem('theme-mode', newThemeMode);
+    }
     this.listeners.forEach((listener) => listener());
   };
 }
