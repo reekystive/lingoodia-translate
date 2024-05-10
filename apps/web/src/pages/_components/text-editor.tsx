@@ -1,11 +1,14 @@
-import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { InitialConfigType, LexicalComposer } from '@lexical/react/LexicalComposer';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
-import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
+import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
+import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';
+import { $getRoot, $getSelection, EditorState, LexicalEditor } from 'lexical';
 import { ComponentPropsWithoutRef, FC } from 'react';
 import { cn } from '../../utils/cn.ts';
+
+type LexicalOnChange = (editorState: EditorState, editor: LexicalEditor, tags: Set<string>) => void;
 
 const initialLexicalConfig: InitialConfigType = {
   namespace: 'lingoodia-editor',
@@ -36,17 +39,25 @@ const Editable: FC<EditableProps> = ({ className, ...props }) => {
 };
 
 export const TextEditor: FC = () => {
+  const onChange: LexicalOnChange = (editorState) => {
+    editorState.read(() => {
+      const root = $getRoot();
+      const selection = $getSelection();
+      console.log('root: %o, selection: %o', root, selection);
+    });
+  };
+
   return (
     <LexicalComposer initialConfig={initialLexicalConfig}>
-      <div className="relative w-full border">
-        <RichTextPlugin
+      <div className="relative w-full border border-red-800 dark:border-red-200">
+        <PlainTextPlugin
           contentEditable={<Editable className="h-[10lh]" />}
           placeholder={<Placeholder />}
           ErrorBoundary={LexicalErrorBoundary}
         />
       </div>
       <HistoryPlugin />
-      <AutoFocusPlugin />
+      <OnChangePlugin onChange={onChange} />
     </LexicalComposer>
   );
 };

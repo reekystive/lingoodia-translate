@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { HeaderPadding, NavBarPadding } from '../components/padding.tsx';
 import { TextEditor } from './_components/text-editor.tsx';
 
-const App: FC = () => {
+const Page: FC = () => {
   return (
     <main className="h-full w-full overflow-auto overscroll-contain">
       <div className="mx-auto flex min-h-full w-full max-w-[1400px] flex-col items-center justify-center px-2 lg:px-8">
@@ -17,4 +17,4 @@ const App: FC = () => {
   );
 };
 
-export default App;
+export default Page;
