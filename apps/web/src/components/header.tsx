@@ -49,7 +49,7 @@ const ThemeModeButton: FC<{ className?: string }> = ({ className }) => {
   return (
     <Button
       onClick={toggleThemeMode}
-      className={cn('rounded-none', className)}
+      className={cn('h-full rounded-none', className)}
       sx={(theme) => ({
         color:
           theme.palette.mode === 'dark' ? theme.palette.primary.light : theme.palette.primary.dark,
