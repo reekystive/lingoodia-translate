@@ -10,6 +10,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import { FC, MouseEvent, ReactNode, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { useMedia } from 'react-use';
 
 const HotKey: FC = () => {
   useHotkeys('meta+backspace', () => {
@@ -48,11 +49,12 @@ const MenuItemWithShortCut: FC<{
   shortCut: string[];
   className?: string;
 }> = ({ icon, label, shortCut, className }) => {
+  const isDesktop = useMedia('(min-width: 640px)');
   return (
     <MenuItem className={className}>
       <ListItemIcon sx={{ color: 'inherit' }}>{icon}</ListItemIcon>
       <ListItemText>{label}</ListItemText>
-      <ShortCut keys={shortCut} />
+      {isDesktop && <ShortCut keys={shortCut} />}
     </MenuItem>
   );
 };
