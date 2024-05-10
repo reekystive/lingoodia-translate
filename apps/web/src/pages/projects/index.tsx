@@ -57,10 +57,15 @@ const Page: FC = () => {
   return (
     <main className="h-full w-full overflow-auto">
       <HeaderPadding />
-      <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-2 px-2 py-2 sm:grid-cols-2 lg:grid-cols-3 lg:px-8 lg:py-6">
-        {Array.from({ length: 20 }).map((_, index) => (
-          <ProjectCard key={index} />
-        ))}
+      <div className="mx-auto max-w-[1400px] px-2 py-2 lg:px-8 lg:py-6">
+        <Typography variant="h5" className="mb-4 mt-16 px-4 text-left font-medium leading-none">
+          Saved Projects
+        </Typography>
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 20 }).map((_, index) => (
+            <ProjectCard key={index} />
+          ))}
+        </div>
       </div>
       <NavBarPadding />
     </main>
