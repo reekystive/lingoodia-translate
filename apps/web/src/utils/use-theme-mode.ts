@@ -7,7 +7,12 @@ const DARK_QUERY = '(prefers-color-scheme: dark)';
 class ThemeModeStorage {
   private listeners = new Set<() => void>();
   constructor() {
-    window.matchMedia(DARK_QUERY).addEventListener('change', () => {
+    window.matchMedia(DARK_QUERY).addEventListener('change', (e) => {
+      const newThemeMode: ThemeMode = e.matches ? 'dark' : 'light';
+      const localStorageValue = window.localStorage.getItem('theme-mode') as ThemeMode | null;
+      if (newThemeMode === localStorageValue) {
+        localStorage.removeItem('theme-mode');
+      }
       this.listeners.forEach((listener) => listener());
     });
   }
