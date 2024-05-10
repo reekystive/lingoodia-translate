@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { updateMetaThemeColor, updateRootColor } from './update-root-color.ts';
-import { useThemeMode } from './use-theme-mode.ts';
+import { ThemeMode, useThemeMode } from './use-theme-mode.ts';
 
 export const useRootColor = (color: `#${string}`) => {
   useEffect(() => {
@@ -16,13 +16,17 @@ export const useMetaThemeColor = (color: `#${string}`) => {
   return color;
 };
 
+export const updateBodyThemeAttribute = (themeMode: ThemeMode) => {
+  if (themeMode === 'dark') {
+    document.body.setAttribute('data-mode', 'dark');
+  } else {
+    document.body.setAttribute('data-mode', 'light');
+  }
+};
+
 export const useBodyThemeAttribute = () => {
   const { themeMode } = useThemeMode();
   useEffect(() => {
-    if (themeMode === 'dark') {
-      document.body.setAttribute('data-mode', 'dark');
-    } else {
-      document.body.setAttribute('data-mode', 'light');
-    }
+    updateBodyThemeAttribute(themeMode);
   }, [themeMode]);
 };

@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from 'react';
 
-type ThemeMode = 'dark' | 'light';
+export type ThemeMode = 'dark' | 'light';
 
 const DARK_QUERY = '(prefers-color-scheme: dark)';
 
@@ -27,7 +27,7 @@ class ThemeModeStorage {
   };
 }
 
-const themeModeStorage = new ThemeModeStorage();
+export const themeModeStorage = new ThemeModeStorage();
 
 export const useThemeMode = () => {
   const themeMode = useSyncExternalStore(themeModeStorage.subscribe, themeModeStorage.getSnapshot);
