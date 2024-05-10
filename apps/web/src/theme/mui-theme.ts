@@ -1,11 +1,14 @@
-import { createTheme } from '@mui/material';
+import { ThemeOptions, createTheme } from '@mui/material';
+import { produce } from 'immer';
+import { useMemo } from 'react';
+import { ThemeMode } from '../utils/use-theme-mode.ts';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
   throw new Error('No root element found');
 }
 
-export const muiTheme = createTheme({
+const muiTheme: ThemeOptions = {
   components: {
     MuiPopover: {
       defaultProps: {
@@ -40,7 +43,6 @@ export const muiTheme = createTheme({
     ].join(','),
   },
   palette: {
-    mode: 'dark',
     primary: {
       main: '#b77a71',
       '50': '#faf7f6',
@@ -62,4 +64,16 @@ export const muiTheme = createTheme({
       light: '#f5eceb',
     },
   },
-});
+};
+
+export const useAppMuiTheme = (themeMode: ThemeMode) => {
+  const theme = useMemo(() => {
+    const newThemeOptions = produce(muiTheme, (draft) => {
+      if (draft.palette) {
+        draft.palette.mode = themeMode;
+      }
+    });
+    return createTheme(newThemeOptions);
+  }, [themeMode]);
+  return theme;
+};

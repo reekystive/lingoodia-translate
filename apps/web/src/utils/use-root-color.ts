@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useMedia } from 'react-use';
 import { updateMetaThemeColor, updateRootColor } from './update-root-color.ts';
 import { ThemeMode, useThemeMode } from './use-theme-mode.ts';
 
@@ -29,4 +30,26 @@ export const useBodyThemeAttribute = () => {
   useEffect(() => {
     updateBodyThemeAttribute(themeMode);
   }, [themeMode]);
+};
+
+export const useThemeColor = () => {
+  const isDesktop = useMedia('(min-width: 640px)');
+  const { themeMode } = useThemeMode();
+  useEffect(() => {
+    if (themeMode === 'dark') {
+      updateRootColor('#151312');
+      if (isDesktop) {
+        updateMetaThemeColor('#1B1514');
+      } else {
+        updateMetaThemeColor('#151312');
+      }
+    } else {
+      updateRootColor('#F9F9F9');
+      if (isDesktop) {
+        updateMetaThemeColor('#F9F9F9');
+      } else {
+        updateMetaThemeColor('#F9F9F9');
+      }
+    }
+  }, [themeMode, isDesktop]);
 };
