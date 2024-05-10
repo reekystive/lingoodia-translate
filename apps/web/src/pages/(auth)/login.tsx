@@ -1,13 +1,13 @@
 import { Button, TextField, styled } from '@mui/material';
-import { clsx } from 'clsx';
 import { FC, ReactNode } from 'react';
 import appleLogo from '../../assets/apple-logo.svg';
 import googleLogo from '../../assets/google-logo.svg';
 import { HeaderPadding, NavBarPadding } from '../../components/padding.tsx';
+import { cn } from '../../utils/cn.ts';
 
 const Sidebar: FC<{ className?: string }> = ({ className }) => {
   return (
-    <div className={clsx('bg-contessa-800 relative bg-opacity-20', className)}>
+    <div className={cn('bg-contessa-800 relative bg-opacity-20', className)}>
       <div className="absolute bottom-0 left-0 right-0 top-0 overflow-clip">
         <div
           className="absolute -bottom-40 -left-10 -right-10 -top-40
@@ -42,7 +42,7 @@ const ThirdPartyLoginButton: FC<{ icon: string; className?: string; children: Re
 }) => {
   return (
     <button
-      className={clsx(
+      className={cn(
         'flex gap-2 rounded-md bg-black px-4 py-3 font-bold transition-opacity hover:opacity-90 active:opacity-80',
         className
       )}
@@ -92,12 +92,13 @@ const LoginPanel: FC = () => {
         />
         <a
           href="#"
+          tabIndex={-1}
           className="mb-2 w-fit self-end text-right text-sm text-gray-300"
           onClick={(e) => e.preventDefault()}
         >
           Forgot password?
         </a>
-        <LoginButton variant="contained" fullWidth disableElevation>
+        <LoginButton type="submit" variant="contained" fullWidth disableElevation>
           Login
         </LoginButton>
       </form>

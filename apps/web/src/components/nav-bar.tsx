@@ -3,10 +3,10 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import TranslateIcon from '@mui/icons-material/Translate';
 import { ButtonBase } from '@mui/material';
-import clsx from 'clsx';
 import { ReactNode } from 'react';
 import { Link, Params, Path } from '../router.ts';
 import { usePathname } from '../utils/use-pathname.ts';
+import { cn } from '../utils/cn.ts';
 
 const NavItem: <P extends Path>(props: {
   link: LinkProps<P, Params>;
@@ -17,7 +17,7 @@ const NavItem: <P extends Path>(props: {
   return (
     <Link
       {...link}
-      className={clsx(
+      className={cn(
         'flex h-full flex-grow basis-1 flex-row items-center justify-center transition-colors',
         pathname === link.to && 'text-contessa-400'
       )}
