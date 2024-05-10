@@ -83,6 +83,12 @@ export const ProjectCardContextMenu: FC<{
         vertical: 'top',
         horizontal: 'right',
       }}
+      slotProps={{
+        paper: {
+          className:
+            'bg-contessa-100 dark:bg-gray-950 bg-opacity-60 dark:bg-opacity-70 backdrop-blur-md',
+        },
+      }}
     >
       <HotKey />
       <MenuItemWithShortCut
@@ -100,7 +106,7 @@ export const ProjectCardContextMenu: FC<{
         icon={<DeleteIcon fontSize="small" />}
         label="Delete"
         shortCut={['⌘', '⌫']}
-        className="text-red-300"
+        className="text-red-700 dark:text-red-300"
       />
     </Menu>
   );

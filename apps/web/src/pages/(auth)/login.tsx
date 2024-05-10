@@ -104,10 +104,13 @@ const LoginPanel: FC = () => {
       </form>
       <Divider />
       <div className="flex flex-col gap-3">
-        <ThirdPartyLoginButton className="bg-white text-gray-700" icon={googleLogo}>
+        <ThirdPartyLoginButton
+          className="border bg-white text-gray-700 dark:border-white"
+          icon={googleLogo}
+        >
           Sign up with Google
         </ThirdPartyLoginButton>
-        <ThirdPartyLoginButton className="bg-black text-white" icon={appleLogo}>
+        <ThirdPartyLoginButton className="border border-black bg-black text-white" icon={appleLogo}>
           Sign up with Apple
         </ThirdPartyLoginButton>
       </div>
