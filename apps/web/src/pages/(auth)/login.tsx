@@ -117,10 +117,11 @@ const LoginPanel: FC = () => {
 const Page: FC = () => {
   return (
     <main className="flex h-full w-full flex-row">
-      <Sidebar className="hidden h-full min-w-[100px] basis-1/4 flex-col lg:flex" />
+      <Sidebar className="hidden h-full min-w-[100px] basis-3/12 flex-col lg:flex" />
       <div className="flex-grow overflow-auto">
         <div className="mx-auto flex min-h-full w-[400px] max-w-full flex-col items-stretch justify-center gap-3 px-4 py-8">
           <HeaderPadding />
+          <div className="block h-[32px] sm:hidden"></div>
           <LoginPanel />
           <NavBarPadding />
         </div>

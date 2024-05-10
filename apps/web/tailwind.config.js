@@ -6,10 +6,12 @@ import defaultTheme from 'tailwindcss/defaultTheme';
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   plugins: [safeArea],
+  important: '#root',
   theme: {
     extend: {
       fontFamily: {
         belanosima: ['Belanosima', ...defaultTheme.fontFamily.sans],
+        inter: ['Inter Variable', ...defaultTheme.fontFamily.sans],
       },
       animation: {},
       keyframes: {},
