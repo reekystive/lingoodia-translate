@@ -32,7 +32,7 @@ const NavItem: <P extends Path>(props: {
 
 export const AppNavBar = () => {
   return (
-    <nav className="fixed bottom-0 z-10 block h-[calc(56px+env(safe-area-inset-bottom))] w-screen overflow-clip sm:hidden">
+    <nav className="fixed bottom-0 z-10 block h-[calc(56px+env(safe-area-inset-bottom))] w-screen touch-none overflow-clip sm:hidden">
       <div
         className="flex h-full w-full flex-row items-center justify-between border-t-[1px]
           border-gray-400 border-opacity-20 pb-[env(safe-area-inset-bottom)]
