@@ -5,8 +5,8 @@ import TranslateIcon from '@mui/icons-material/Translate';
 import { ButtonBase } from '@mui/material';
 import { ReactNode } from 'react';
 import { Link, Params, Path } from '../router.ts';
-import { usePathname } from '../utils/use-pathname.ts';
 import { cn } from '../utils/cn.ts';
+import { usePathname } from '../utils/use-pathname.ts';
 
 const NavItem: <P extends Path>(props: {
   link: LinkProps<P, Params>;

@@ -1,6 +1,5 @@
-import { clsx } from 'clsx';
-import { cn } from '../utils/cn.ts';
 import { FC } from 'react';
+import { cn } from '../utils/cn.ts';
 
 export const HeaderPadding: FC<{ className?: string }> = ({ className }) => {
   return <div className={cn('hidden h-[48px] flex-shrink-0 sm:block', className)}></div>;
