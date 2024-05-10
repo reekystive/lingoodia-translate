@@ -19,7 +19,7 @@ const NavItem: <P extends Path>(props: {
       {...link}
       className={cn(
         'flex h-full flex-grow basis-1 flex-row items-center justify-center transition-colors',
-        pathname === link.to && 'text-contessa-400'
+        pathname === link.to && 'text-contessa-700 dark:text-contessa-400'
       )}
     >
       <ButtonBase className="flex h-full w-full flex-col items-center justify-center text-xs leading-none">

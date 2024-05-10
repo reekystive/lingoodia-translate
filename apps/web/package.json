@@ -32,7 +32,8 @@
     "react-use": "^17.5.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-safe-area": "^0.5.1",
-    "vite-plugin-pwa": "^0.20.0"
+    "vite-plugin-pwa": "^0.20.0",
+    "vite-plugin-svgr": "^4.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.79",

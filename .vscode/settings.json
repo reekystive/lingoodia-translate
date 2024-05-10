@@ -20,6 +20,7 @@
     "pharlap",
     "pnpx",
     "supertest",
+    "svgr",
     "tailwindcss",
     "trpc"
   ],

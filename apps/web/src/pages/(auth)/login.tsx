@@ -11,8 +11,8 @@ const Sidebar: FC<{ className?: string }> = ({ className }) => {
       <div className="absolute bottom-0 left-0 right-0 top-0 overflow-clip">
         <div
           className="absolute -bottom-40 -left-10 -right-10 -top-40
-        select-none font-serif text-6xl font-bold leading-none text-red-100
-        opacity-5 mix-blend-lighten [writing-mode:vertical-rl]"
+        select-none font-serif text-6xl font-bold leading-none text-red-900 opacity-5
+        mix-blend-darken [writing-mode:vertical-rl] dark:text-red-100 dark:mix-blend-lighten"
         >
           {Array.from({ length: 20 }, () => hello).join(' ')}
         </div>
@@ -57,9 +57,9 @@ const ThirdPartyLoginButton: FC<{ icon: string; className?: string; children: Re
 const Divider: FC = () => {
   return (
     <div className="relative flex flex-row items-center py-4">
-      <div className="h-1 flex-grow bg-white opacity-10"></div>
+      <div className="h-1 flex-grow bg-black opacity-10 dark:bg-white"></div>
       <div className="flex-shrink-0 px-2">Or Sign up With</div>
-      <div className="h-1 flex-grow bg-white opacity-10"></div>
+      <div className="h-1 flex-grow bg-black opacity-10 dark:bg-white"></div>
     </div>
   );
 };
@@ -93,7 +93,7 @@ const LoginPanel: FC = () => {
         <a
           href="#"
           tabIndex={-1}
-          className="mb-2 w-fit self-end text-right text-sm text-gray-300"
+          className="mb-2 w-fit self-end text-right text-sm text-gray-700 dark:text-gray-300"
           onClick={(e) => e.preventDefault()}
         >
           Forgot password?

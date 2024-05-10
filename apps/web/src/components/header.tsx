@@ -30,7 +30,12 @@ const NavItem: <P extends Path>(props: {
       <NavButton
         startIcon={icon}
         sx={(theme) => ({
-          color: pathname === link.to ? theme.palette.primary.main : theme.palette.primary.light,
+          color:
+            pathname === link.to
+              ? theme.palette.primary.main
+              : theme.palette.mode === 'dark'
+                ? theme.palette.primary.light
+                : theme.palette.primary.dark,
         })}
       >
         {label}
@@ -46,7 +51,8 @@ const ThemeModeButton: FC<{ className?: string }> = ({ className }) => {
       onClick={toggleThemeMode}
       className={cn('rounded-none', className)}
       sx={(theme) => ({
-        color: theme.palette.primary.light,
+        color:
+          theme.palette.mode === 'dark' ? theme.palette.primary.light : theme.palette.primary.dark,
       })}
     >
       {themeMode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}

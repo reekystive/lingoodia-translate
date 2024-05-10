@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react-swc';
 import { defineConfig } from 'vite';
 import { VitePWA as pwa } from 'vite-plugin-pwa';
 import sassDts from 'vite-plugin-sass-dts';
+import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -10,6 +11,7 @@ export default defineConfig({
     react(),
     sassDts(),
     generouted(),
+    svgr(),
     pwa({
       registerType: 'autoUpdate',
       devOptions: {
