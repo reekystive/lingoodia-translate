@@ -38,7 +38,7 @@ const NavItem: <P extends Path>(props: {
 export const AppHeader: FC = () => {
   return (
     <header className="fixed top-0 z-10 hidden h-[48px] w-screen touch-none overflow-clip sm:block">
-      <div className="border-b-contessa-800 dark:bg-contessa-950 flex h-full w-full flex-row items-center justify-between border-b-[1px] border-opacity-10 px-2 backdrop-blur-md dark:bg-opacity-20">
+      <div className="border-b-contessa-800 bg-contessa-200 dark:bg-contessa-950 flex h-full w-full flex-row items-center justify-between border-b-[1px] border-opacity-10 px-2 backdrop-blur-md dark:bg-opacity-20">
         <HeaderLogo className="px-2 py-2" />
         <div className="flex h-full flex-row items-stretch">
           <NavItem link={{ to: '/' }} label="Translate" icon={<TranslateIcon />} />

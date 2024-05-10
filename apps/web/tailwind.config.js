@@ -7,6 +7,7 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   plugins: [safeArea],
   important: '#root',
+  darkMode: ['selector', '[data-mode="dark"]'],
   theme: {
     extend: {
       fontFamily: {
