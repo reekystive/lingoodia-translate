@@ -17,6 +17,7 @@ node_modules/
 # Build Artifacts
 dist/
 dist-ssr/
+dev-dist/
 *.local
 
 # Sass module declaration files

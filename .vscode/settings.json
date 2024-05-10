@@ -1,12 +1,20 @@
 {
   "cSpell.words": [
+    "belanosima",
+    "Belanosima",
+    "clsx",
+    "contessa",
     "fastify",
+    "fontsource",
+    "generouted",
     "kysely",
     "lingoodia",
     "nestjs",
     "nextjs",
     "outdir",
     "outfile",
+    "overriden",
+    "pharlap",
     "pnpx",
     "supertest",
     "tailwindcss",
@@ -15,7 +23,7 @@
   "cSpell.ignorePaths": ["node_modules", "pnpm-lock.yaml"],
   "eslint.experimental.useFlatConfig": true,
   "eslint.workingDirectories": ["${workspaceFolder}"],
-  "editor.rulers": [120],
+  "editor.rulers": [100],
   "typescript.preferences.importModuleSpecifierEnding": "js",
   "typescript.tsdk": "node_modules/typescript/lib"
 }

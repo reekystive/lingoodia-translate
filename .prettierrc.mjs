@@ -1,7 +1,7 @@
 /** @type {import('prettier').Config} */
 export default {
   semi: true,
-  printWidth: 120,
+  printWidth: 100,
   trailingComma: 'es5',
   singleQuote: true,
   jsxSingleQuote: false,

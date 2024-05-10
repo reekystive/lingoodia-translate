@@ -3,9 +3,11 @@
 
 import { components, hooks, utils } from '@generouted/react-router/client';
 
-export type Path = `/`;
+export type Path = `/` | `/login` | `/projects` | `/projects/:slug`;
 
-export type Params = {};
+export type Params = {
+  '/projects/:slug': { slug: string };
+};
 
 export type ModalPath = never;
 
