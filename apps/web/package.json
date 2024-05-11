@@ -16,6 +16,7 @@
     "@fontsource/belanosima": "^5.0.5",
     "@fontsource/roboto": "^5.0.13",
     "@generouted/react-router": "^1.19.3",
+    "@kvs/indexeddb": "^2.1.4",
     "@lexical/react": "^0.14.5",
     "@lingoodia/language-codes": "workspace:*",
     "@lingoodia/server": "workspace:*",
@@ -26,6 +27,7 @@
     "dayjs": "^1.11.11",
     "immer": "^10.1.1",
     "lexical": "^0.14.5",
+    "openai": "^4.45.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hotkeys-hook": "^4.5.0",
@@ -33,6 +35,7 @@
     "react-use": "^17.5.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-safe-area": "^0.5.1",
+    "typed-local-store": "^2.0.2",
     "vite-plugin-pwa": "^0.20.0",
     "vite-plugin-svgr": "^4.2.0"
   },

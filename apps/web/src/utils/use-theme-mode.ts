@@ -1,3 +1,4 @@
+import { typedStorage } from '@src/store/persist/typed-storage';
 import { useSyncExternalStore } from 'react';
 
 export type ThemeMode = 'dark' | 'light';
@@ -9,7 +10,7 @@ class ThemeModeStorage {
   constructor() {
     window.matchMedia(DARK_QUERY).addEventListener('change', (e) => {
       const newThemeMode: ThemeMode = e.matches ? 'dark' : 'light';
-      const localStorageValue = window.localStorage.getItem('theme-mode') as ThemeMode | null;
+      const localStorageValue = typedStorage.getItem('theme-mode');
       if (newThemeMode === localStorageValue) {
         localStorage.removeItem('theme-mode');
       }
@@ -17,7 +18,7 @@ class ThemeModeStorage {
     });
   }
   public getSnapshot = () => {
-    const localStorageValue = window.localStorage.getItem('theme-mode') as ThemeMode | null;
+    const localStorageValue = typedStorage.getItem('theme-mode');
     if (localStorageValue) {
       return localStorageValue;
     }
@@ -33,9 +34,9 @@ class ThemeModeStorage {
   public setThemeMode = (newThemeMode: ThemeMode) => {
     const matchValue: ThemeMode = window.matchMedia(DARK_QUERY).matches ? 'dark' : 'light';
     if (newThemeMode === matchValue) {
-      localStorage.removeItem('theme-mode');
+      typedStorage.removeItem('theme-mode');
     } else {
-      localStorage.setItem('theme-mode', newThemeMode);
+      typedStorage.setItem('theme-mode', newThemeMode);
     }
     this.listeners.forEach((listener) => listener());
   };

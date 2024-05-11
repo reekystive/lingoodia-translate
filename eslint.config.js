@@ -55,6 +55,7 @@ export default defineFlatConfig([
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/no-confusing-void-expression': ['error', { ignoreArrowShorthand: true }],
       '@typescript-eslint/restrict-template-expressions': ['error', { allowNumber: true }],
+      '@typescript-eslint/no-unsafe-call': 'off', // this rule is slow and buggy when refactoring code
     },
     settings: {
       react: { version: 'detect' },
@@ -67,7 +68,6 @@ export default defineFlatConfig([
     },
     rules: {
       '@typescript-eslint/require-await': 'off',
-      '@typescript-eslint/no-unsafe-call': 'off', // this rule is slow and buggy when refactoring code
     },
   },
 ]);
