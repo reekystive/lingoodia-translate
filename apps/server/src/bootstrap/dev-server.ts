@@ -1,6 +1,9 @@
 import { AnyRouter } from '@trpc/server';
-import { createHTTPServer } from '@trpc/server/adapters/standalone';
-import cors from 'cors';
+import {
+  CreateExpressContextOptions,
+  createExpressMiddleware,
+} from '@trpc/server/adapters/express';
+import express from 'express';
 import { AddressInfo } from 'net';
 
 function printAddress(address: string | AddressInfo | null) {
@@ -16,32 +19,37 @@ function printAddress(address: string | AddressInfo | null) {
   }
 }
 
+const createContext = ({ req: _req, res: _res }: CreateExpressContextOptions) => ({}); // no context
+
 export async function startDevServer(props: { router: AnyRouter; port: number }) {
-  const server = createHTTPServer({
-    router: props.router,
-    middleware: cors(),
-    createContext: () => ({}),
-  });
+  const app = express();
+  app.use(
+    '/trpc',
+    createExpressMiddleware({
+      router: props.router,
+      createContext,
+    })
+  );
+
+  let server: ReturnType<typeof app.listen> | null = null;
 
   function start() {
     return new Promise<void>((resolve, reject) => {
-      server.server.once('error', (err) => {
-        console.error(err);
-        reject(err);
-      });
-      server.server.once('listening', () => {
-        const address = server.server.address();
-        printAddress(address);
+      server = app.listen(props.port);
+      server.once('error', reject);
+      server.once('listening', () => {
+        printAddress(server?.address() ?? null);
         resolve();
       });
-      server.listen(props.port);
     });
   }
 
   function shutdown() {
     return new Promise<void>((resolve) => {
-      server.server.once('close', resolve);
-      server.server.close();
+      server?.close(() => {
+        console.log('server closed');
+        resolve();
+      });
     });
   }
 
