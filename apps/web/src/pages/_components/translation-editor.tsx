@@ -3,6 +3,7 @@ import { IconButton, TextField } from '@mui/material';
 import { useOpenaiClient } from '@src/server/openai.ts';
 import { getLanguageCodePrompt } from '@src/server/prompts/language-code.ts';
 import { getTranslateTextPrompt } from '@src/server/prompts/translate-text.ts';
+import { getTranslationOptimizationPrompt } from '@src/server/prompts/translation-optimization.ts';
 import { cn } from '@src/utils/cn.ts';
 import { getLanguageCodeByString } from '@src/utils/user-agent-language.ts';
 import useThrottledCallback from 'beautiful-react-hooks/useThrottledCallback';
@@ -20,6 +21,7 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
   const [optimizationText, setOptimizationText] = useState('');
   const sourceLanguageAbortControllers = useRef<AbortController[]>([]);
   const targetLanguageAbortControllers = useRef<AbortController[]>([]);
+  const optimizationAbortControllers = useRef<AbortController[]>([]);
 
   const inferenceSourceLanguage = useThrottledCallback(
     async (text: string) => {
@@ -117,6 +119,60 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
     { leading: true, trailing: true }
   );
 
+  const handleOptimizeTranslation = useThrottledCallback(
+    async (params: {
+      sourceLanguage: Language | null;
+      targetLanguage: Language;
+      sourceText: string;
+      targetText: string;
+      userFeedback: string;
+    }) => {
+      if (optimizationAbortControllers.current.some((controller) => !controller.signal.aborted)) {
+        console.warn('[OpenAI] Aborting previous optimization request');
+        optimizationAbortControllers.current.forEach((controller) => controller.abort());
+      }
+      const controller = new AbortController();
+      optimizationAbortControllers.current.push(controller);
+      const messages = getTranslationOptimizationPrompt({
+        sourceLanguage: params.sourceLanguage ?? undefined,
+        targetLanguage: params.targetLanguage,
+        sourceText: params.sourceText,
+        translatedText: params.targetText,
+        userFeedback: params.userFeedback,
+      });
+      try {
+        console.info('[OpenAI] starting optimization');
+        const stream = await openai.chat.completions.create({
+          model: 'gpt-3.5-turbo',
+          messages,
+          stream: true,
+        });
+        let optimizedTranslation = '';
+        for await (const message of stream) {
+          if (controller.signal.aborted) {
+            console.warn('[OpenAI] optimization aborted');
+            stream.controller.abort();
+            throw new Error('Aborted');
+          }
+          if (message.choices[0]?.delta.content) {
+            optimizedTranslation += message.choices[0].delta.content;
+            setTargetText(optimizedTranslation);
+          }
+        }
+        console.info('[OpenAI] optimization response: %o', optimizedTranslation);
+      } catch (e) {
+        console.error('[OpenAI] optimization error: %o', e);
+      } finally {
+        optimizationAbortControllers.current = optimizationAbortControllers.current.filter(
+          (item) => item !== controller
+        );
+      }
+    },
+    [openai.chat.completions],
+    3000,
+    { leading: true, trailing: true }
+  );
+
   return (
     <div
       className={cn(
@@ -184,14 +240,28 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
       <form
         className="relative"
         onKeyDown={(e) => {
-          if (e.key === 'Enter' && e.metaKey) {
+          if (e.key === 'Enter') {
             e.preventDefault();
             console.log('submit (meta enter)');
+            void handleOptimizeTranslation({
+              sourceLanguage,
+              targetLanguage: targetLanguage ?? getDefaultLanguage(),
+              sourceText,
+              targetText,
+              userFeedback: optimizationText,
+            });
           }
         }}
         onSubmit={(e) => {
           e.preventDefault();
           console.log('submit');
+          void handleOptimizeTranslation({
+            sourceLanguage,
+            targetLanguage: targetLanguage ?? getDefaultLanguage(),
+            sourceText,
+            targetText,
+            userFeedback: optimizationText,
+          });
         }}
       >
         <TextField

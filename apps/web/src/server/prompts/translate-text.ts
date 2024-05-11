@@ -42,6 +42,8 @@ If user only provided whitespace, newlines or other meaningless characters, you 
 Source language: __PLACEHOLDER_SOURCE_LANGUAGE__
 Target language: __PLACEHOLDER_TARGET_LANGUAGE__
 
+You MUST follow target language's grammar and punctuation rules. You MUST translate text into the target language.
+
 Below is the text you need to translate:
 `;
 // cspell:enable
