@@ -37,7 +37,7 @@ const ProjectCard: FC<{ children?: ReactNode }> = () => {
             sx={{ whiteSpaceCollapse: 'preserve' }}
             className="line-clamp-5 text-ellipsis"
           >
-            {lorems.chinese[0].trim()}
+            {lorems.chinese[0]?.trim()}
           </Typography>
         </CardContent>
         <CardActions className="flex flex-row justify-between">

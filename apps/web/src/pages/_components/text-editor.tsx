@@ -42,6 +42,7 @@ export const TextEditor: FC<{
   slotProps?: {
     contentEditable?: ComponentPropsWithoutRef<typeof ContentEditable>;
   };
+  className?: string;
 }> = (props) => {
   const onChange: LexicalOnChange = (editorState) => {
     editorState.read(() => {
@@ -53,7 +54,7 @@ export const TextEditor: FC<{
 
   return (
     <LexicalComposer initialConfig={initialLexicalConfig}>
-      <div className="relative w-full">
+      <div className={cn('relative w-full', props.className)}>
         <PlainTextPlugin
           contentEditable={
             <Editable
