@@ -5,17 +5,15 @@ import { FC, SyntheticEvent } from 'react';
 import { Language, languages } from './language.ts';
 
 export const LanguageSelect: FC<{
-  defaultValue?: Language;
-  value?: Language;
+  value: Language | null;
   onChange?: (event: SyntheticEvent, value: Language | null) => void;
   label?: string;
-}> = ({ value, defaultValue, onChange, label }) => {
+}> = ({ value, onChange, label }) => {
   return (
     <Autocomplete
       className="w-[300px] max-w-full"
       options={languages}
       autoHighlight
-      defaultValue={defaultValue}
       value={value}
       onChange={onChange}
       getOptionLabel={(option) => option.label}

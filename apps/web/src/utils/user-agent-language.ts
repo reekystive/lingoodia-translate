@@ -1,7 +1,11 @@
 import { LanguageCode, languageCodes } from '@lingoodia/language-codes';
 
-export const getUserAgentLanguageCode = (): LanguageCode | null => {
-  const language = navigator.language;
+export const getLanguageCodeByString = (
+  language: string | null | undefined
+): LanguageCode | null => {
+  if (language === null || language === undefined) {
+    return null;
+  }
   const languageCode = languageCodes.find((code) => language === code);
   if (languageCode) {
     return languageCode;
@@ -19,4 +23,9 @@ export const getUserAgentLanguageCode = (): LanguageCode | null => {
     return languagePartsCode;
   }
   return null;
+};
+
+export const getUserAgentLanguageCode = (): LanguageCode | null => {
+  const language = navigator.language;
+  return getLanguageCodeByString(language);
 };
