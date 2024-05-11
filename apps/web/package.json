@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@lingoodia/language-codes": "workspace:*",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@fontsource-variable/inter": "^5.0.18",
@@ -18,6 +17,7 @@
     "@fontsource/roboto": "^5.0.13",
     "@generouted/react-router": "^1.19.3",
     "@lexical/react": "^0.14.5",
+    "@lingoodia/language-codes": "workspace:*",
     "@lingoodia/server": "workspace:*",
     "@mui/icons-material": "^5.15.17",
     "@mui/material": "^5.15.17",

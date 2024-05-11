@@ -18,6 +18,7 @@ node_modules/
 dist/
 dist-ssr/
 dev-dist/
+.wrangler/
 *.local
 
 # Sass module declaration files

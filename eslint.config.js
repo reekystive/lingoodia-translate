@@ -31,7 +31,11 @@ export default defineFlatConfig([
     languageOptions: {
       parser: tsParser,
       parserOptions: {
-        project: ['./tsconfig{,.node}.json', '{apps,libs}/*/tsconfig{,.node}.json'],
+        project: [
+          './tsconfig{,.node}.json',
+          '{apps,libs}/*/tsconfig{,.node}.json',
+          '{apps,libs}/*/{src,test}/tsconfig{,.node}.json',
+        ],
       },
       globals: { ...globals.browser, ...globals.es2020 },
     },

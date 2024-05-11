@@ -7,9 +7,15 @@
     "lib": ["ES2022"],
     "allowImportingTsExtensions": true,
     "noEmit": true,
-    "types": ["@edge-runtime/types"],
+    "types": ["@cloudflare/workers-types/2023-07-01"],
     "outDir": "dist",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "paths": {
+      "@src/*": ["./src/*"]
+    }
   },
-  "include": ["src", "*.config.ts"]
+  "include": ["src", "*.config.ts", "*.setup.ts", "worker-configuration.d.ts"],
+  "exclude": ["test"]
 }
