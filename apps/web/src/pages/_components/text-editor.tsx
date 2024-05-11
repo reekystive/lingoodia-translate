@@ -33,7 +33,7 @@ const Editable: FC<EditableProps> = ({ className, ...props }) => {
   return (
     <ContentEditable
       {...props}
-      className={cn('relative h-[3lh] w-full p-2 outline-none', className)}
+      className={cn('relative min-h-[3lh] w-full p-2 outline-none', className)}
     />
   );
 };
@@ -58,7 +58,7 @@ export const TextEditor: FC<{
           contentEditable={
             <Editable
               {...props.slotProps?.contentEditable}
-              className={cn('h-[10lh]', props.slotProps?.contentEditable?.className)}
+              className={cn('min-h-[10lh]', props.slotProps?.contentEditable?.className)}
             />
           }
           placeholder={<Placeholder />}

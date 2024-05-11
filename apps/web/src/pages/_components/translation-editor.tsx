@@ -10,7 +10,7 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
     <div
       className={cn(
         borderClassName,
-        `dark:bg-contessa-950 w-full rounded-md border bg-white bg-opacity-80 dark:bg-opacity-20`,
+        `dark:bg-contessa-950 w-full overflow-clip rounded-md border bg-white bg-opacity-80 dark:bg-opacity-20`,
         className
       )}
     >

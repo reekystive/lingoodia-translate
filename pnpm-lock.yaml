@@ -141,6 +141,9 @@ importers:
       '@lexical/react':
         specifier: ^0.14.5
         version: 0.14.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(yjs@13.6.15)
+      '@lingoodia/language-codes':
+        specifier: workspace:*
+        version: link:../../libs/language-codes
       '@lingoodia/server':
         specifier: workspace:*
         version: link:../server
