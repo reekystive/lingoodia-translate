@@ -7,4 +7,13 @@ export default {
   jsxSingleQuote: false,
   tabWidth: 2,
   plugins: ['prettier-plugin-organize-imports', 'prettier-plugin-tailwindcss'],
+  overrides: [
+    {
+      files: 'libs/language-codes/src/**/*.{j,t}s{,x}',
+      options: {
+        printWidth: 180,
+        quoteProps: 'consistent',
+      },
+    },
+  ],
 };

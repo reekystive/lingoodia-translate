@@ -1,0 +1,11 @@
+{
+  "name": "@lingoodia/language-codes",
+  "private": true,
+  "author": "reekystive",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/index.ts"
+    }
+  }
+}
