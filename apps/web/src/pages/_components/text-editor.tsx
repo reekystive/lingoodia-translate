@@ -63,7 +63,10 @@ export const TextEditor: FC<{
   value?: string;
   onChange?: (editorState: EditorState, textContent: string) => void;
 }> = (props) => {
-  const onChange: LexicalOnChange = (editorState) => {
+  const onChange: LexicalOnChange = (editorState, editor) => {
+    if (editor.isComposing()) {
+      return;
+    }
     editorState.read(() => {
       const root = $getRoot();
       const textContent = root.getTextContent();
