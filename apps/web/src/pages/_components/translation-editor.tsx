@@ -1,4 +1,3 @@
-import { LanguageCode } from '@lingoodia/language-codes';
 import SendIcon from '@mui/icons-material/Send';
 import { IconButton, TextField } from '@mui/material';
 import { useOpenaiClient } from '@src/server/openai.ts';
@@ -18,6 +17,7 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
   const [targetLanguage, setTargetLanguage] = useState<Language | null>(getDefaultLanguage());
   const [sourceText, setSourceText] = useState('');
   const [targetText, setTargetText] = useState('');
+  const [optimizationText, setOptimizationText] = useState('');
   const sourceLanguageAbortControllers = useRef<AbortController[]>([]);
   const targetLanguageAbortControllers = useRef<AbortController[]>([]);
 
@@ -68,12 +68,9 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
   );
 
   const translate = useThrottledCallback(
-    async (
-      source: string,
-      sourceLanguage: LanguageCode | undefined,
-      targetLanguage: LanguageCode
-    ) => {
-      if (!sourceLanguage?.trim()) {
+    async (source: string, sourceLanguage: Language | undefined, targetLanguage: Language) => {
+      if (!source.trim()) {
+        setTargetText('');
         return;
       }
       if (targetLanguageAbortControllers.current.some((controller) => !controller.signal.aborted)) {
@@ -139,7 +136,12 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
           <LanguageSelect
             label="Target language"
             value={targetLanguage}
-            onChange={(_e, language) => setTargetLanguage(language)}
+            onChange={(_e, language) => {
+              setTargetLanguage(language);
+              if (language) {
+                void translate(sourceText, sourceLanguage ?? undefined, language);
+              }
+            }}
           />
         </div>
       </div>
@@ -161,7 +163,7 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
             if (!targetLanguage?.code) {
               return;
             }
-            void translate(textContent, sourceLanguage?.code, targetLanguage.code);
+            void translate(textContent, sourceLanguage ?? undefined, targetLanguage);
           }}
         />
         <TextEditor
@@ -213,6 +215,10 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
           minRows={5}
           maxRows={10}
           name="optimization-text"
+          value={optimizationText}
+          onChange={(e) => {
+            setOptimizationText(e.target.value);
+          }}
         />
         <IconButton className="absolute bottom-2 right-2 aspect-square" type="submit">
           <SendIcon />
