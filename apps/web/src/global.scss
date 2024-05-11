@@ -8,11 +8,13 @@
   font-weight: 400;
 
   color-scheme: light dark;
+
+  // --background-color is set after react side effect
   color: #213547;
-  background-color: var(--theme-color, #ffffff);
+  background-color: var(--background-color, #ffffff);
   @media (prefers-color-scheme: dark) {
     color: #e3e3e3;
-    background-color: var(--theme-color, #242424);
+    background-color: var(--background-color, #242424);
   }
 
   font-synthesis: none;

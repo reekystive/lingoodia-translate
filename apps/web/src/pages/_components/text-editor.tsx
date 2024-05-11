@@ -38,7 +38,11 @@ const Editable: FC<EditableProps> = ({ className, ...props }) => {
   );
 };
 
-export const TextEditor: FC = () => {
+export const TextEditor: FC<{
+  slotProps?: {
+    contentEditable?: ComponentPropsWithoutRef<typeof ContentEditable>;
+  };
+}> = (props) => {
   const onChange: LexicalOnChange = (editorState) => {
     editorState.read(() => {
       const root = $getRoot();
@@ -49,9 +53,14 @@ export const TextEditor: FC = () => {
 
   return (
     <LexicalComposer initialConfig={initialLexicalConfig}>
-      <div className="relative w-full border border-red-800 dark:border-red-200">
+      <div className="relative w-full">
         <PlainTextPlugin
-          contentEditable={<Editable className="h-[10lh]" />}
+          contentEditable={
+            <Editable
+              {...props.slotProps?.contentEditable}
+              className={cn('h-[10lh]', props.slotProps?.contentEditable?.className)}
+            />
+          }
           placeholder={<Placeholder />}
           ErrorBoundary={LexicalErrorBoundary}
         />
