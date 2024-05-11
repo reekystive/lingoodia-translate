@@ -67,6 +67,7 @@ export default defineFlatConfig([
     },
     rules: {
       '@typescript-eslint/require-await': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off', // this rule is slow and buggy when refactoring code
     },
   },
 ]);
