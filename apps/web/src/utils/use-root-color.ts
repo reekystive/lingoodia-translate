@@ -44,11 +44,11 @@ export const useThemeColor = () => {
         updateMetaThemeColor('#151312');
       }
     } else {
-      updateRootColor('#F9F9F9');
+      updateRootColor('#F9F5F4');
       if (isDesktop) {
-        updateMetaThemeColor('#F9F9F9');
+        updateMetaThemeColor('#EEDDDA');
       } else {
-        updateMetaThemeColor('#F9F9F9');
+        updateMetaThemeColor('#F9F5F4');
       }
     }
   }, [themeMode, isDesktop]);
