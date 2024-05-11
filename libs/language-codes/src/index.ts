@@ -1,3 +1,4 @@
+export { languageEmojiMap } from './emojis.ts';
 export { languageCodes } from './language-code.ts';
 export type { LanguageCode } from './language-code.ts';
 export { languageLocalNames } from './local-names.ts';
