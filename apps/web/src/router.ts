@@ -3,7 +3,7 @@
 
 import { components, hooks, utils } from '@generouted/react-router/client';
 
-export type Path = `/` | `/login` | `/projects` | `/projects/:slug`;
+export type Path = `/` | `/login` | `/logout` | `/onboarding` | `/projects` | `/projects/:slug`;
 
 export type Params = {
   '/projects/:slug': { slug: string };
