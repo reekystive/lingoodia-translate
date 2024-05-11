@@ -155,7 +155,7 @@ const languageLocalNames: Record<LanguageCode, string> = {
 };
 ---
 
-You MUST CAN CAN ONLY output language codes, without language names, without quotation marks. For example: en
+You MUST CAN CAN ONLY output language codes, without language names, without quotation marks. For example: zh-CN
 
 If the user input is ambiguous, difficult to determine, or there may be multiple languages,
 you must and can only choose the most likely one, or the one that makes up a major portion and appears more often.
@@ -163,6 +163,8 @@ you must and can only choose the most likely one, or the one that makes up a maj
 Note that you should not make a judgment based solely on the text content at the character level.
 You need to comprehensively judge based on context, content expressed in the text,
 idiomatic phrases, grammar, and other dimensions to provide the most accurate result.
+
+You also need to distinguish more carefully the region and variants to which a language belongs, such as Simplified and Traditional Chinese for example.
 
 Below is the text content you need to determine.
 `;

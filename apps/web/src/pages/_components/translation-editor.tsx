@@ -1,5 +1,5 @@
 import SendIcon from '@mui/icons-material/Send';
-import { IconButton, TextField } from '@mui/material';
+import { CircularProgress, IconButton, TextField } from '@mui/material';
 import { useOpenaiClient } from '@src/server/openai.ts';
 import { getLanguageCodePrompt } from '@src/server/prompts/language-code.ts';
 import { getTranslateTextPrompt } from '@src/server/prompts/translate-text.ts';
@@ -7,7 +7,7 @@ import { getTranslationOptimizationPrompt } from '@src/server/prompts/translatio
 import { cn } from '@src/utils/cn.ts';
 import { getLanguageCodeByString } from '@src/utils/user-agent-language.ts';
 import useThrottledCallback from 'beautiful-react-hooks/useThrottledCallback';
-import { FC, useRef, useState } from 'react';
+import { FC, useState } from 'react';
 import { LanguageSelect } from './language-select.tsx';
 import { Language, getDefaultLanguage, getLanguageByCode } from './language.ts';
 import { TextEditor } from './text-editor.tsx';
@@ -19,18 +19,33 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
   const [sourceText, setSourceText] = useState('');
   const [targetText, setTargetText] = useState('');
   const [optimizationText, setOptimizationText] = useState('');
-  const sourceLanguageAbortControllers = useRef<AbortController[]>([]);
-  const targetLanguageAbortControllers = useRef<AbortController[]>([]);
-  const optimizationAbortControllers = useRef<AbortController[]>([]);
+  const [sourceLanguageAbortControllers, setSourceLanguageAbortControllers] = useState<
+    AbortController[]
+  >([]);
+  const [targetLanguageAbortControllers, setTargetLanguageAbortControllers] = useState<
+    AbortController[]
+  >([]);
+  const [optimizationAbortControllers, setOptimizationAbortControllers] = useState<
+    AbortController[]
+  >([]);
+
+  const startingTranslate =
+    targetText === '' &&
+    (optimizationAbortControllers.some((controller) => !controller.signal.aborted) ||
+      targetLanguageAbortControllers.some((controller) => !controller.signal.aborted));
+
+  const disableOptimizationInput =
+    optimizationAbortControllers.some((controller) => !controller.signal.aborted) ||
+    targetLanguageAbortControllers.some((controller) => !controller.signal.aborted);
 
   const inferenceSourceLanguage = useThrottledCallback(
     async (text: string) => {
-      if (sourceLanguageAbortControllers.current.some((controller) => !controller.signal.aborted)) {
+      if (sourceLanguageAbortControllers.some((controller) => !controller.signal.aborted)) {
         console.warn('[OpenAI] Aborting previous inferenceSourceLanguage request');
-        sourceLanguageAbortControllers.current.forEach((controller) => controller.abort());
+        sourceLanguageAbortControllers.forEach((controller) => controller.abort());
       }
       const controller = new AbortController();
-      sourceLanguageAbortControllers.current.push(controller);
+      setSourceLanguageAbortControllers([...sourceLanguageAbortControllers, controller]);
       const messages = getLanguageCodePrompt(text);
       try {
         console.info('[OpenAI] inferenceSourceLanguage');
@@ -59,8 +74,8 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
       } catch (e) {
         console.warn('[OpenAI] inferenceSourceLanguage error: %o', e);
       } finally {
-        sourceLanguageAbortControllers.current = sourceLanguageAbortControllers.current.filter(
-          (item) => item !== controller
+        setSourceLanguageAbortControllers(
+          sourceLanguageAbortControllers.filter((item) => item !== controller)
         );
       }
     },
@@ -75,12 +90,12 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
         setTargetText('');
         return;
       }
-      if (targetLanguageAbortControllers.current.some((controller) => !controller.signal.aborted)) {
+      if (targetLanguageAbortControllers.some((controller) => !controller.signal.aborted)) {
         console.warn('[OpenAI] Aborting previous translation request');
-        targetLanguageAbortControllers.current.forEach((controller) => controller.abort());
+        targetLanguageAbortControllers.forEach((controller) => controller.abort());
       }
       const controller = new AbortController();
-      targetLanguageAbortControllers.current.push(controller);
+      setTargetLanguageAbortControllers([...targetLanguageAbortControllers, controller]);
       const prompt = getTranslateTextPrompt({
         sourceLanguage,
         targetLanguage,
@@ -109,8 +124,8 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
       } catch (e) {
         console.error('[OpenAI] translation error: %o', e);
       } finally {
-        targetLanguageAbortControllers.current = targetLanguageAbortControllers.current.filter(
-          (item) => item !== controller
+        setTargetLanguageAbortControllers(
+          targetLanguageAbortControllers.filter((item) => item !== controller)
         );
       }
     },
@@ -127,12 +142,12 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
       targetText: string;
       userFeedback: string;
     }) => {
-      if (optimizationAbortControllers.current.some((controller) => !controller.signal.aborted)) {
+      if (optimizationAbortControllers.some((controller) => !controller.signal.aborted)) {
         console.warn('[OpenAI] Aborting previous optimization request');
-        optimizationAbortControllers.current.forEach((controller) => controller.abort());
+        optimizationAbortControllers.forEach((controller) => controller.abort());
       }
       const controller = new AbortController();
-      optimizationAbortControllers.current.push(controller);
+      setOptimizationAbortControllers([...optimizationAbortControllers, controller]);
       const messages = getTranslationOptimizationPrompt({
         sourceLanguage: params.sourceLanguage ?? undefined,
         targetLanguage: params.targetLanguage,
@@ -163,8 +178,8 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
       } catch (e) {
         console.error('[OpenAI] optimization error: %o', e);
       } finally {
-        optimizationAbortControllers.current = optimizationAbortControllers.current.filter(
-          (item) => item !== controller
+        setOptimizationAbortControllers(
+          optimizationAbortControllers.filter((item) => item !== controller)
         );
       }
     },
@@ -225,7 +240,11 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
         <TextEditor
           slotProps={{
             placeholder: {
-              children: 'Translated text will appear here.',
+              children: startingTranslate ? (
+                <CircularProgress size={24} />
+              ) : (
+                'Translated text will appear here.'
+              ),
             },
             contentEditable: {
               className:
@@ -243,6 +262,7 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
           if (e.key === 'Enter') {
             e.preventDefault();
             console.log('submit (meta enter)');
+            setTargetText('');
             void handleOptimizeTranslation({
               sourceLanguage,
               targetLanguage: targetLanguage ?? getDefaultLanguage(),
@@ -255,6 +275,7 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
         onSubmit={(e) => {
           e.preventDefault();
           console.log('submit');
+          setTargetText('');
           void handleOptimizeTranslation({
             sourceLanguage,
             targetLanguage: targetLanguage ?? getDefaultLanguage(),
@@ -265,6 +286,7 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
         }}
       >
         <TextField
+          disabled={disableOptimizationInput}
           sx={{
             '& .MuiInputBase-root fieldset.MuiOutlinedInput-notchedOutline': {
               borderWidth: '1px',
