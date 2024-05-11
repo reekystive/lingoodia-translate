@@ -1,4 +1,6 @@
 import { LanguageCode } from '@lingoodia/language-codes';
+import SendIcon from '@mui/icons-material/Send';
+import { IconButton, TextField } from '@mui/material';
 import { useOpenaiClient } from '@src/server/openai.ts';
 import { getLanguageCodePrompt } from '@src/server/prompts/language-code.ts';
 import { getTranslateTextPrompt } from '@src/server/prompts/translate-text.ts';
@@ -121,12 +123,11 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
   return (
     <div
       className={cn(
-        `dark:border-contessa-200 dark:bg-contessa-950 w-full overflow-clip rounded-md border border-gray-200
-         bg-white bg-opacity-80 dark:border-opacity-10 dark:bg-opacity-20`,
+        `dark:bg-contessa-950 w-full overflow-clip rounded-md bg-white bg-opacity-80 dark:bg-opacity-20`,
         className
       )}
     >
-      <div className="dark:border-contessa-200 grid w-full grid-cols-2 border-b-[1px] border-gray-200 dark:border-opacity-10">
+      <div className="dark:border-contessa-200 grid w-full grid-cols-2 rounded-t-md border-[1px] border-gray-200 dark:border-opacity-10">
         <div className="p-2">
           <LanguageSelect
             label="Source language"
@@ -142,7 +143,7 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
           />
         </div>
       </div>
-      <div className="grid w-full lg:grid-cols-2">
+      <div className="dark:border-contessa-200 grid w-full border-x-[1px] border-gray-200 lg:grid-cols-2 dark:border-opacity-10">
         <TextEditor
           slotProps={{
             placeholder: {
@@ -150,7 +151,7 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
             },
             contentEditable: {
               className:
-                'border-gray-200 dark:border-contessa-200 dark:border-opacity-10 border-t-[0.5px] lg:border-t-[0px] lg:border-l-[0.5px]',
+                'border-gray-200 dark:border-contessa-200 dark:border-opacity-10 h-full lg:border-r-[0.5px] border-b-[1px] lg:border-b-[0px]',
             },
           }}
           value={sourceText}
@@ -170,7 +171,7 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
             },
             contentEditable: {
               className:
-                'border-gray-200 dark:border-contessa-200 dark:border-opacity-10 border-t-[0.5px] lg:border-t-[0px] lg:border-l-[0.5px]',
+                'border-gray-200 dark:border-contessa-200 dark:border-opacity-10 lg:border-l-[0.5px] h-full',
             },
           }}
           editable={false}
@@ -178,6 +179,45 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
           onChange={(_editorState, textContent) => setTargetText(textContent)}
         />
       </div>
+      <form
+        className="relative"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && e.metaKey) {
+            e.preventDefault();
+            console.log('submit (meta enter)');
+          }
+        }}
+        onSubmit={(e) => {
+          e.preventDefault();
+          console.log('submit');
+        }}
+      >
+        <TextField
+          sx={{
+            '& .MuiInputBase-root fieldset.MuiOutlinedInput-notchedOutline': {
+              borderWidth: '1px',
+              borderColor: 'inherit',
+            },
+          }}
+          InputProps={{
+            className:
+              'dark:border-contessa-200 border-gray-200 dark:border-opacity-10 rounded-b-md rounded-t-none',
+          }}
+          InputLabelProps={{
+            className: 'bg-red',
+          }}
+          label="Optimize translation"
+          placeholder="You should translate the original text as..."
+          multiline
+          fullWidth
+          minRows={5}
+          maxRows={10}
+          name="optimization-text"
+        />
+        <IconButton className="absolute bottom-2 right-2 aspect-square" type="submit">
+          <SendIcon />
+        </IconButton>
+      </form>
     </div>
   );
 };

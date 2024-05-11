@@ -34,6 +34,8 @@ Don't include the starting and ending "---" in your response.
 You can only output the translated text, DO NOT include any additional information.
 If user only provided whitespace, newlines or other meaningless characters, you should just return the input as is.
 
+如果输出文案中包含中英文混排的内容，请确保遵守「中文文案排版指北」的相关规范，在中文和英文之间添加空格。
+
 Source language: __PLACEHOLDER_SOURCE_LANGUAGE__
 Target language: __PLACEHOLDER_TARGET_LANGUAGE__
 
