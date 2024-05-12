@@ -89,7 +89,12 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
   );
 
   const translate = useThrottledCallback(
-    async (source: string, sourceLanguage: Language | undefined, targetLanguage: Language) => {
+    async (
+      source: string,
+      sourceLanguage: Language | undefined,
+      targetLanguage: Language,
+      userRequirement?: string
+    ) => {
       if (!source.trim()) {
         setTargetText('');
         return;
@@ -104,6 +109,7 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
         sourceLanguage,
         targetLanguage,
         inputText: source,
+        userRequirement: userRequirement,
       });
       try {
         console.info('[OpenAI] starting translation');
@@ -215,7 +221,7 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
             onChange={(_e, language) => {
               setTargetLanguage(language);
               if (language) {
-                void translate(sourceText, sourceLanguage ?? undefined, language);
+                void translate(sourceText, sourceLanguage ?? undefined, language, optimizationText);
               }
             }}
           />
@@ -239,7 +245,12 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
             if (!targetLanguage?.code) {
               return;
             }
-            void translate(textContent, sourceLanguage ?? undefined, targetLanguage);
+            void translate(
+              textContent,
+              sourceLanguage ?? undefined,
+              targetLanguage,
+              optimizationText
+            );
           }}
         />
         <TextEditor
@@ -300,7 +311,7 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
             className:
               'dark:border-contessa-200 border-gray-200 dark:border-opacity-10 rounded-b-md rounded-t-none',
           }}
-          label="Optimize translation"
+          label="Optimize translation or add translation style"
           placeholder="You should translate the original text as..."
           multiline
           fullWidth
