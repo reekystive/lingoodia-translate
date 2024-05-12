@@ -200,16 +200,12 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
       )}
     >
       <div className="dark:border-contessa-200 grid w-full grid-cols-2 rounded-t-md border-[1px] border-gray-200 dark:border-opacity-10">
-        <div className="flex flex-row items-center gap-2 p-2">
+        <div className="p-2">
           <LanguageSelect
             label="Source language"
             value={sourceLanguage}
             onChange={(_e, language) => setSourceLanguage(language)}
-          />
-          <CircularProgress
-            size={24}
-            variant="indeterminate"
-            className={cn({ hidden: !sourceLanguageLoading })}
+            loading={sourceLanguageLoading}
           />
         </div>
         <div className="p-2">
@@ -271,7 +267,6 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
           if (e.key === 'Enter') {
             e.preventDefault();
             console.log('submit (meta enter)');
-            setTargetText('');
             void handleOptimizeTranslation({
               sourceLanguage,
               targetLanguage: targetLanguage ?? getDefaultLanguage(),
@@ -284,7 +279,6 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
         onSubmit={(e) => {
           e.preventDefault();
           console.log('submit');
-          setTargetText('');
           void handleOptimizeTranslation({
             sourceLanguage,
             targetLanguage: targetLanguage ?? getDefaultLanguage(),
@@ -305,9 +299,6 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
           InputProps={{
             className:
               'dark:border-contessa-200 border-gray-200 dark:border-opacity-10 rounded-b-md rounded-t-none',
-          }}
-          InputLabelProps={{
-            className: 'bg-red',
           }}
           label="Optimize translation"
           placeholder="You should translate the original text as..."

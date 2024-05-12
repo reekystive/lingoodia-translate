@@ -1,3 +1,4 @@
+import { CircularProgress } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -8,7 +9,8 @@ export const LanguageSelect: FC<{
   value: Language | null;
   onChange?: (event: SyntheticEvent, value: Language | null) => void;
   label?: string;
-}> = ({ value, onChange, label }) => {
+  loading?: boolean;
+}> = ({ value, onChange, label, loading }) => {
   return (
     <Autocomplete
       className="w-[300px] max-w-full"
@@ -28,9 +30,15 @@ export const LanguageSelect: FC<{
         <TextField
           {...params}
           label={label}
-          inputProps={{
-            ...params.inputProps,
+          InputProps={{
+            ...params.InputProps,
             autoComplete: 'off',
+            endAdornment: (
+              <>
+                {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                {params.InputProps.endAdornment}
+              </>
+            ),
           }}
           size="small"
         />
