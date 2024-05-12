@@ -12,13 +12,16 @@ import { LanguageSelect } from './language-select.tsx';
 import { Language, getDefaultLanguage, getLanguageByCode } from './language.ts';
 import { TextEditor } from './text-editor.tsx';
 
-export const TranslationEditor: FC<{ className?: string }> = ({ className }) => {
+export const TranslationEditor: FC<{
+  className?: string;
+  userInputValue: string;
+  onUserInputChange?: (v: string) => void;
+}> = ({ className, userInputValue, onUserInputChange }) => {
   const openai = useOpenaiClient();
   const [sourceLanguage, setSourceLanguage] = useState<Language | null>(null);
   const [targetLanguage, setTargetLanguage] = useState<Language | null>(getDefaultLanguage());
   const [sourceText, setSourceText] = useState('');
   const [targetText, setTargetText] = useState('');
-  const [optimizationText, setOptimizationText] = useState('');
   const [sourceLanguageAbortControllers, setSourceLanguageAbortControllers] = useState<
     AbortController[]
   >([]);
@@ -221,7 +224,7 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
             onChange={(_e, language) => {
               setTargetLanguage(language);
               if (language) {
-                void translate(sourceText, sourceLanguage ?? undefined, language, optimizationText);
+                void translate(sourceText, sourceLanguage ?? undefined, language, userInputValue);
               }
             }}
           />
@@ -249,7 +252,7 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
               textContent,
               sourceLanguage ?? undefined,
               targetLanguage,
-              optimizationText
+              userInputValue
             );
           }}
         />
@@ -283,7 +286,7 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
               targetLanguage: targetLanguage ?? getDefaultLanguage(),
               sourceText,
               targetText,
-              userFeedback: optimizationText,
+              userFeedback: userInputValue,
             });
           }
         }}
@@ -295,7 +298,7 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
             targetLanguage: targetLanguage ?? getDefaultLanguage(),
             sourceText,
             targetText,
-            userFeedback: optimizationText,
+            userFeedback: userInputValue,
           });
         }}
       >
@@ -318,9 +321,9 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
           minRows={5}
           maxRows={10}
           name="optimization-text"
-          value={optimizationText}
+          value={userInputValue}
           onChange={(e) => {
-            setOptimizationText(e.target.value);
+            onUserInputChange?.(e.target.value);
           }}
         />
         <IconButton className="absolute bottom-2 right-2 aspect-square" type="submit">
