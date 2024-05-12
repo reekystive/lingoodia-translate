@@ -51,6 +51,9 @@ export const TranslationEditor: FC<{
         console.warn('[OpenAI] Aborting previous inferenceSourceLanguage request');
         sourceLanguageAbortControllers.forEach((controller) => controller.abort());
       }
+      if (!text.trim()) {
+        return;
+      }
       const controller = new AbortController();
       setSourceLanguageAbortControllers([...sourceLanguageAbortControllers, controller]);
       const messages = getLanguageCodePrompt(text);
@@ -98,13 +101,13 @@ export const TranslationEditor: FC<{
       targetLanguage: Language,
       userRequirement?: string
     ) => {
-      if (!source.trim()) {
-        setTargetText('');
-        return;
-      }
       if (targetLanguageAbortControllers.some((controller) => !controller.signal.aborted)) {
         console.warn('[OpenAI] Aborting previous translation request');
         targetLanguageAbortControllers.forEach((controller) => controller.abort());
+      }
+      if (!source.trim()) {
+        setTargetText('');
+        return;
       }
       const controller = new AbortController();
       setTargetLanguageAbortControllers([...targetLanguageAbortControllers, controller]);
@@ -197,7 +200,7 @@ export const TranslationEditor: FC<{
       }
     },
     [openai.chat.completions],
-    3000,
+    1000,
     { leading: true, trailing: true }
   );
 
