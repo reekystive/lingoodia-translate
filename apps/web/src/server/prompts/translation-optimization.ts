@@ -10,6 +10,8 @@ Your task is to re-output a optimized translation result based on the original t
 
 You should only return the translated text, DO NOT add any additional descriptions and annotations.
 You should output the FULL translation result, not just the changed part.
+
+You should not anwser the user feedback directly, ONLY provide the optimized translation result without anything else.
 `;
 // cspell:enable
 
