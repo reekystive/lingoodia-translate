@@ -20,8 +20,10 @@ export const useMetaThemeColor = (color: `#${string}`) => {
 export const updateBodyThemeAttribute = (themeMode: ThemeMode) => {
   if (themeMode === 'dark') {
     document.body.setAttribute('data-mode', 'dark');
+    document.documentElement.style.setProperty('color-scheme', 'dark');
   } else {
     document.body.setAttribute('data-mode', 'light');
+    document.documentElement.style.setProperty('color-scheme', 'light');
   }
 };
 
