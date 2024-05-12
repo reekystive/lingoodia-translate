@@ -38,6 +38,10 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
     optimizationAbortControllers.some((controller) => !controller.signal.aborted) ||
     targetLanguageAbortControllers.some((controller) => !controller.signal.aborted);
 
+  const sourceLanguageLoading = sourceLanguageAbortControllers.some(
+    (controller) => !controller.signal.aborted
+  );
+
   const inferenceSourceLanguage = useThrottledCallback(
     async (text: string) => {
       if (sourceLanguageAbortControllers.some((controller) => !controller.signal.aborted)) {
@@ -196,11 +200,16 @@ export const TranslationEditor: FC<{ className?: string }> = ({ className }) => 
       )}
     >
       <div className="dark:border-contessa-200 grid w-full grid-cols-2 rounded-t-md border-[1px] border-gray-200 dark:border-opacity-10">
-        <div className="p-2">
+        <div className="flex flex-row items-center gap-2 p-2">
           <LanguageSelect
             label="Source language"
             value={sourceLanguage}
             onChange={(_e, language) => setSourceLanguage(language)}
+          />
+          <CircularProgress
+            size={24}
+            variant="indeterminate"
+            className={cn({ hidden: !sourceLanguageLoading })}
           />
         </div>
         <div className="p-2">
