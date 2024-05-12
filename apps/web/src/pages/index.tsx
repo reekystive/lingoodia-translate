@@ -69,32 +69,32 @@ interface Preset {
 
 const presets: Preset[] = [
   {
-    title: '扩展原文',
+    title: '🚀 扩展原文', // emoji: 🚀
     description: '你需要发挥想象力，尽可能地扩展原文，增加一些原文不存在的内容，而不仅限于原文。',
   },
   {
-    title: '提升表达',
+    title: '🌟 提升表达', // emoji: 🌟
     description: '你需要提升原文的表达水平，使其更加生动、有趣、有感染力。',
   },
   {
-    title: '缩减原文',
+    title: '📉 缩减原文', // emoji: 📉
     description: '你需要缩减原文，减少一些原文中的内容，让内容更精简。',
   },
   {
-    title: '转换风格',
+    title: '🔄 转换风格', // emoji: 🔄
     description: '你需要转换原文的风格，让其更符合口语、随意、幽默等风格。',
   },
   {
-    title: '调整语气',
+    title: '🎭 调整语气', // emoji: 🎭
     description: '你需要调整原文的语气，让原文以更加主观的方式表达。',
   },
   {
-    title: '技术文档',
+    title: '💻 技术文档', // emoji: 💻
     description:
       '你需要将原文转换为技术文档会使用的翻译风格，使其更加专业、严谨。对于一些术语或专有名词，你需要适当保留原文。',
   },
   {
-    title: '排版优化',
+    title: '📝 排版优化', // emoji: 📝
     description: '遵循「中文文案排版指北」，对原文进行排版优化，在中英文之间加上空格。',
   },
 ];
