@@ -49,7 +49,10 @@ const SuggestionButton: FC<{
       )}
       onClick={onClick}
     >
-      <div className="dark:border-contessa-200 flex h-full w-full flex-col items-start rounded-md border-[1px] border-gray-200 p-4 dark:border-opacity-10">
+      <div
+        className="dark:border-contessa-200 flex h-full w-full flex-col items-start rounded-md border-[1px]
+      border-gray-200 p-4 dark:border-opacity-10"
+      >
         <Typography variant="h6">{content.title}</Typography>
         <Typography variant="body1" className="mt-2 line-clamp-4 flex-grow">
           {content.description}
