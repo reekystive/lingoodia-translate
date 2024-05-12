@@ -32,7 +32,7 @@ const Page: FC = () => {
   };
 
   return (
-    <main className="h-full w-full overflow-scroll overscroll-contain">
+    <main className="h-full w-full overflow-auto overscroll-contain">
       <div className="flex min-h-full w-full flex-col items-center justify-center px-2 py-6">
         <HeaderPadding />
         <div className="w-[480px] max-w-full sm:pb-20">
