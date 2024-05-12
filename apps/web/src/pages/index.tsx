@@ -44,7 +44,7 @@ const SuggestionButton: FC<{
   return (
     <ButtonBase
       className={cn(
-        'h-[200px] w-[300px] overflow-clip rounded-md bg-[#FEFDFD] text-left dark:bg-[#1B1514]',
+        'w-[250px] overflow-clip rounded-md bg-[#FEFDFD] text-left dark:bg-[#1B1514]',
         className
       )}
       onClick={onClick}
@@ -54,7 +54,7 @@ const SuggestionButton: FC<{
       border-gray-200 p-4 dark:border-opacity-10"
       >
         <Typography variant="h6">{content.title}</Typography>
-        <Typography variant="body1" className="mt-2 line-clamp-4 flex-grow">
+        <Typography variant="body1" className="mt-2 line-clamp-3 h-[3lh] flex-grow">
           {content.description}
         </Typography>
       </div>
@@ -92,6 +92,10 @@ const presets: Preset[] = [
     title: '技术文档',
     description:
       '你需要将原文转换为技术文档会使用的翻译风格，使其更加专业、严谨。对于一些术语或专有名词，你需要适当保留原文。',
+  },
+  {
+    title: '排版优化',
+    description: '遵循「中文文案排版指北」，对原文进行排版优化，在中英文之间加上空格。',
   },
 ];
 
